@@ -7,7 +7,7 @@ Public Class DataManager
 
     Public Function ExecuteQuery(query As String) As Tuple(Of DataSet, String)
         Dim data As New DataSet
-        Dim humanReadableResult As String = "All good"
+        Dim Result As String = "All good"
         Try
             Using connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes")
                 connection.Open()
@@ -17,9 +17,9 @@ Public Class DataManager
                 connection.Close()
             End Using
         Catch ex As Exception
-            humanReadableResult = ex.Message & vbNewLine
-            humanReadableResult = ex.StackTrace.ToString
+            Result = ex.Message & vbNewLine
+            Result = ex.StackTrace.ToString
         End Try
-        Return Tuple.Create(data, humanReadableResult)
+        Return Tuple.Create(data, Result)
     End Function
 End Class

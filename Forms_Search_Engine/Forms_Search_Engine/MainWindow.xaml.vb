@@ -15,7 +15,14 @@ Class MainWindow
         ElseIf Mid(FormID.Text, 1, 1) > Chr(32) Then
             Query = "SELECT * FROM FORMS_INFO WHERE FormId= '" & FormID.Text & "';"
         End If
-        If Not String.IsNullOrEmpty(Query) Then myDataGrid.ItemsSource = FormData.FetchExisting(Query)
+        If Not String.IsNullOrEmpty(Query) Then
+            myDataGrid.ItemsSource = FormData.FetchExisting(Query)
+            If myDataGrid.Items.Count = 0 Then
+                MessageBox.Show("No Record Found!!")
+            End If
+        Else
+            MessageBox.Show("Enter Program Name or Form ID to Search the Database!!")
+        End If
     End Sub
     Private Sub ClearButtonClick(sender As Object, e As RoutedEventArgs) Handles ClearButton.Click
 
