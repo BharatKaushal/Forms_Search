@@ -21,7 +21,11 @@
         <TextBox Grid.Row="0" Grid.Column="1" x:Name="ProgramName" Text="2GMMIL15"></TextBox>
         <Label Grid.Row="1" Grid.Column="0">Form ID</Label>
         <TextBox Grid.Row="1" Grid.Column="1"  x:Name="FormID"></TextBox>
-        <Button Grid.Row="2" Grid.Column="1" x:Name="button" Content="Search" HorizontalAlignment="Right"/>
+        <DockPanel Grid.Row="2" Grid.Column="1" Margin="0">
+            <Button DockPanel.Dock="Right" x:Name="SearchButton" Content="Search" Margin="5,0,0,0" />
+            <Button DockPanel.Dock="Right" x:Name="ClearButton" Content="Clear" Width="40"/>
+            <Canvas></Canvas>
+        </DockPanel>
         <!--<DataGrid x:Name="dataGrid" AutoGenerateColumns="True" HorizontalAlignment="Left" Margin="17,3,0,-0.333" Grid.Row="2" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="482" Height="208" Grid.RowSpan="2"/>-->
         <DataGrid x:Name="myDataGrid" Grid.Row="3" Grid.ColumnSpan="2">
         </DataGrid>
