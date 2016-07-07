@@ -1,6 +1,5 @@
 ﻿Imports System.Data.SqlClient
 Class MainWindow
-
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
@@ -25,7 +24,6 @@ Class MainWindow
         End If
     End Sub
     Private Sub ClearButtonClick(sender As Object, e As RoutedEventArgs) Handles ClearButton.Click
-
         ProgramName.Text = String.Empty
         FormID.Text = String.Empty
         myDataGrid.ItemsSource = New List(Of FormData)
