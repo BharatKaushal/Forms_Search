@@ -20,7 +20,7 @@ Public Class FormData
         Dim dm As New DataManager
         Dim dt = dm.ExecuteQuery(crit)
         For Each dr In dt.Item1.Tables(0).Rows 'dt.Item1.Tables.First.Rows
-            Dim itm As New FormData(dr("FormId"), dr("ProgramName"), dr("Descriprion"), dr("Offset"), dr("Date_Modified"))
+            Dim itm As New FormData(dr("FormId"), dr("ProgramName"), dr("Description"), dr("Offset"), dr("DateModified"))
             l.Add(itm)
         Next
         Return l

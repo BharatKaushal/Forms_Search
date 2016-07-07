@@ -9,7 +9,7 @@ Public Class DataManager
         Dim data As New DataSet
         Dim Result As String = "All good"
         Try
-            Using connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes")
+            Using connection As New SqlConnection("Server=DEVELOPMENT01L\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805")
                 connection.Open()
                 Dim command As New SqlCommand(query, connection)
                 Dim dataAdapter As New SqlDataAdapter(command)
