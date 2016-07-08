@@ -5,7 +5,7 @@ Imports System.Data.SqlClient
 Imports System.Data
 Public Class DataManager
 
-    Public Function ExecuteQuery(query As String) As Tuple(Of DataSet, String)
+    Public Shared Function ExecuteQuery(query As String) As Tuple(Of DataSet, String)
         Dim data As New DataSet
         Dim Result As String = "All good"
         Try
