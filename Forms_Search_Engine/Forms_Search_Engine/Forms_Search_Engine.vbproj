@@ -49,6 +49,15 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Csla">
+      <HintPath>..\References\Csla.dll</HintPath>
+    </Reference>
+    <Reference Include="Csla.Windows">
+      <HintPath>..\References\Csla.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Csla.Xaml">
+      <HintPath>..\References\Csla.Xaml.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -83,12 +92,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FORMS_DATABASEDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="IDataStore.vb" />
     <Compile Include="MainWindow.xaml.vb">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Import Include="Csla" />
     <Import Include="System.Threading.Tasks" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
@@ -109,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormData.vb" />
+    <Compile Include="MockFormDataStore.vb" />
     <Compile Include="My Project\AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>

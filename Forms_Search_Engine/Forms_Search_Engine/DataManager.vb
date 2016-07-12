@@ -4,8 +4,9 @@ Imports System.Data.Sql
 Imports System.Data.SqlClient
 Imports System.Data
 Public Class DataManager
+    Implements IDataStore
 
-    Public Shared Function ExecuteQuery(query As String) As Tuple(Of DataSet, String)
+    Public Function ExecuteQuery(query As String) As Tuple(Of DataSet, String) Implements IDataStore.ExecuteQuery
         Dim data As New DataSet
         Dim Result As String = "All good"
         Try
