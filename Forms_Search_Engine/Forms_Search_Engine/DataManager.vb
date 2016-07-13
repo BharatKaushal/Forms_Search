@@ -6,20 +6,20 @@ Imports System.Data
 Public Class DataManager
     Implements IDataStore
 
-    Public Function ExecuteQuery(query As String) As Tuple(Of DataSet, String) Implements IDataStore.ExecuteQuery
-        Dim data As New DataSet
+    Public Function ExecuteQuery(query As String) As Tuple(Of SqlDataReader, String) Implements IDataStore.ExecuteQuery
+        Dim data As SqlDataReader = Nothing
         Dim Result As String = "All good"
         Try
-            Using connection As New SqlConnection("Server=DEVELOPMENT01L\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805")
-                connection.Open()
-                Dim command As New SqlCommand(query, connection)
-                Dim dataAdapter As New SqlDataAdapter(command)
-                dataAdapter.Fill(data)
-                connection.Close()
-            End Using
+            Dim connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes")
+            connection.Open()
+            Dim command As New SqlCommand(query, connection)
+            'Dim dataAdapter As New SqlDataAdapter(command)
+            data = command.ExecuteReader()
+            'connection.Close()
+
         Catch ex As Exception
             Result = ex.Message & vbNewLine
-            Result = ex.StackTrace.ToString
+            Result &= ex.StackTrace.ToString
         End Try
         Return Tuple.Create(data, Result)
     End Function

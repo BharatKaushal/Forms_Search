@@ -21,6 +21,7 @@ Class MainWindow
         Dim crit As New FormDataInfoList.Criteria()
         crit.ProgramName = ProgramName.Text
         crit.FormId = FormID.Text
+        crit.DataSource = New DataManager
         myDataGrid.ItemsSource = FormDataInfoList.Fetch(crit)
     End Sub
 

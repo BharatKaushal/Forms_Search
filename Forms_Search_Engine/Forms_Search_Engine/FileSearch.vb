@@ -8,6 +8,9 @@ Public Class FileSearch
             Dim dir As String = stack.Pop
             Try
                 result.AddRange(Directory.GetFiles(dir, "2*.bas"))
+                If InStr(dir, "\src") Then
+                    result.AddRange(Directory.GetFiles(dir, "_3*.vb"))
+                End If
                 Dim directoryName As String
                 For Each directoryName In Directory.GetDirectories(dir)
                     stack.Push(directoryName)
