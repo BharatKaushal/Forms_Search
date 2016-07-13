@@ -86,6 +86,7 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FileSearch.vb" />
     <Compile Include="FormDataInfoList.vb" />
     <Compile Include="FORMS_DATABASEDataSet.Designer.vb">
       <AutoGen>True</AutoGen>

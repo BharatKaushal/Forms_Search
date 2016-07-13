@@ -23,4 +23,12 @@ Class MainWindow
         crit.FormId = FormID.Text
         myDataGrid.ItemsSource = FormDataInfoList.Fetch(crit)
     End Sub
+
+    Private Sub bFileSearchButtonClick(sender As Object, e As RoutedEventArgs) Handles FileSearchButton.Click
+        Dim list As List(Of String) = FileSearch.GetFilesRecursive("")
+        For Each path In list
+            Console.WriteLine(path)
+        Next
+        Console.WriteLine(list.Count)
+    End Sub
 End Class
