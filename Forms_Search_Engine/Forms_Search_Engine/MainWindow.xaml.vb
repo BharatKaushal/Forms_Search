@@ -26,7 +26,7 @@ Class MainWindow
     End Sub
 
     Private Sub bFileSearchButtonClick(sender As Object, e As RoutedEventArgs) Handles FileSearchButton.Click
-        Dim list As List(Of String) = FileSearch.GetFilesRecursive("")
+        Dim list As List(Of String) = FileSearch.GetFilesRecursive("C:\Users\Bhanu-PC\Desktop\GAMES")
         For Each path In list
             Console.WriteLine(path)
         Next

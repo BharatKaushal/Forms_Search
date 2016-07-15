@@ -1,6 +1,4 @@
-﻿
-'Public SQLConnect As New SqlConnection With {.ConnectionString = "Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes;"}
-Imports System.Data.Sql
+﻿Imports System.Data.Sql
 Imports System.Data.SqlClient
 Imports System.Data
 Public Class DataManager
@@ -13,14 +11,70 @@ Public Class DataManager
             Dim connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes")
             connection.Open()
             Dim command As New SqlCommand(query, connection)
-            'Dim dataAdapter As New SqlDataAdapter(command)
             data = command.ExecuteReader()
-            'connection.Close()
-
         Catch ex As Exception
             Result = ex.Message & vbNewLine
             Result &= ex.StackTrace.ToString
         End Try
         Return Tuple.Create(data, Result)
+    End Function
+    Public Function ExecuteInsertUpdate(query As String, ByVal fields As Dictionary(Of String, Object)) As Object
+        Dim IdentityValue As Object = Nothing
+        Dim data As SqlDataReader = Nothing
+        Using connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes")
+            connection.Open()
+            Try
+                Dim ds As New DataSet
+                Dim da As New SqlDataAdapter(query, connection)
+                da.FillSchema(ds, SchemaType.Source)
+                da.Fill(ds)
+                Dim cb As New SqlCommandBuilder(da)
+                Dim dr As DataRow = Nothing
+                If ds.Tables(0).Rows.Count = 0 Then
+                    dr = ds.Tables(0).NewRow
+                Else
+                    dr = ds.Tables(0).Rows(0)
+                End If
+                For Each fieldName As String In fields.Keys
+                    dr(fieldName) = fields(fieldName)
+                Next
+                If dr.RowState = DataRowState.Detached Then
+                    ds.Tables(0).Rows.Add(dr)
+                End If
+                Dim identityColumn As DataColumn = Nothing
+                For Each dc As DataColumn In ds.Tables(0).Columns
+                    If dc.AutoIncrement Then
+                        identityColumn = dc
+                        Exit For
+                    End If
+                Next
+                For Each row As DataRow In ds.Tables(0).Rows
+                    Dim newRow As Boolean = False
+                    If row.RowState = DataRowState.Added Then
+                        newRow = True
+                    End If
+                    If Not row.RowState = DataRowState.Unchanged Then
+                        da.Update({row})
+                        If identityColumn IsNot Nothing Then
+                            identityValue = row(identityColumn)
+                        End If
+                    End If
+                    If newRow AndAlso (identityColumn IsNot Nothing) Then
+                        Dim result As Object
+                        Using comm As New SqlCommand("SELECT @@IDENTITY", connection)
+                            result = comm.ExecuteScalar()
+                        End Using
+                        Try
+                            IdentityValue = result
+                        Catch ex As Exception
+                            IdentityValue = Nothing
+                        End Try
+                    End If
+                Next
+            Finally
+                connection.Close()
+            End Try
+        End Using
+        Return IdentityValue
     End Function
 End Class
