@@ -26,10 +26,20 @@ Class MainWindow
     End Sub
 
     Private Sub bFileSearchButtonClick(sender As Object, e As RoutedEventArgs) Handles FileSearchButton.Click
-        Dim list As List(Of String) = FileSearch.GetFilesRecursive("C:\Users\Bhanu-PC\Desktop\GAMES")
-        For Each path In list
-            Console.WriteLine(path)
-        Next
-        Console.WriteLine(list.Count)
+        Dim LIST_DATA As New List(Of Tuple(Of String, String, String, String))
+        LIST_DATA = FileSearch.GetFileInfo()
+        Console.WriteLine("Program Name: " & LIST_DATA.Item(0).Item1)
+        Console.WriteLine("Form ID: " & LIST_DATA.Item(0).Item2)
+        Console.WriteLine("Offset: " & LIST_DATA.Item(0).Item3)
+        Console.WriteLine("Description: " & LIST_DATA.Item(0).Item4)
+        Console.WriteLine("Program Name: " & LIST_DATA.Item(1).Item1)
+        Console.WriteLine("Form ID: " & LIST_DATA.Item(1).Item2)
+        Console.WriteLine("Offset: " & LIST_DATA.Item(1).Item3)
+        Console.WriteLine("Description: " & LIST_DATA.Item(1).Item4)
+        'Dim list As List(Of String) = FileSearch.GetFilesRecursive("C:\Users\Bhanu-PC\Desktop\GAMES")
+        'For Each path In list
+        '    Console.WriteLine(path)
+        'Next
+        'Console.WriteLine(list.Count)
     End Sub
 End Class
