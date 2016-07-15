@@ -8,7 +8,7 @@ Public Class DataManager
         Dim data As SqlDataReader = Nothing
         Dim Result As String = "All good"
         Try
-            Dim connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes")
+            Dim connection As New SqlConnection("Server=BHARATS03D\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805")
             connection.Open()
             Dim command As New SqlCommand(query, connection)
             data = command.ExecuteReader()
@@ -21,7 +21,7 @@ Public Class DataManager
     Public Function ExecuteInsertUpdate(query As String, ByVal fields As Dictionary(Of String, Object)) As Object
         Dim IdentityValue As Object = Nothing
         Dim data As SqlDataReader = Nothing
-        Using connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes")
+        Using connection As New SqlConnection("Server=BHARATS03D\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805")
             connection.Open()
             Try
                 Dim ds As New DataSet
@@ -56,7 +56,7 @@ Public Class DataManager
                     If Not row.RowState = DataRowState.Unchanged Then
                         da.Update({row})
                         If identityColumn IsNot Nothing Then
-                            identityValue = row(identityColumn)
+                            IdentityValue = row(identityColumn)
                         End If
                     End If
                     If newRow AndAlso (identityColumn IsNot Nothing) Then

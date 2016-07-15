@@ -26,6 +26,7 @@ Class MainWindow
     End Sub
 
     Private Sub bFileSearchButtonClick(sender As Object, e As RoutedEventArgs) Handles FileSearchButton.Click
+        Dim InsertUpdate As New DataManager
         Dim LIST_DATA As New List(Of Tuple(Of String, String, String, String))
         LIST_DATA = FileSearch.GetFileInfo()
         Console.WriteLine("Program Name: " & LIST_DATA.Item(0).Item1)

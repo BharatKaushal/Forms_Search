@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text.RegularExpressions
 Public Class FileSearch
-    Public Shared Function GetFilesRecursive(ByVal initial As String) As List(Of String)
+    Public Shared Function GetFilesRecursive(ByVal initial As String) As List(Of String) ', lastRunDate As DateTime
         Dim result As New List(Of String)
         Dim stack As New Stack(Of String)
         stack.Push(initial)
@@ -26,13 +26,14 @@ Public Class FileSearch
         Dim r As New Regex("(?:[^a-z0-9 ]|(?<=['""])s)", RegexOptions.IgnoreCase Or RegexOptions.CultureInvariant Or RegexOptions.Compiled)
         Return r.Replace(input, [String].Empty)
     End Function
-    Public Shared Function GetFileInfo() As List(Of Tuple(Of String, String, String, String))
-        Dim list As List(Of String) = GetFilesRecursive("C:\Users\Bhanu-PC\Desktop\GAMES\New folder")
+    Public Shared Function GetFileInfo() As List(Of FormData) '(Of Tuple(Of String, String, String, String))
+        Dim As FormData
+        Dim list As List(Of String) = GetFilesRecursive("C:\Users\bharats\Desktop\New folder")
         ' Loop through and display each path.
-        Dim formname As String = String.Empty
-        Dim FORMID As String = String.Empty
-        Dim OFFSET As String = String.Empty
-        Dim DESC As String = String.Empty
+        'Dim formname As String = String.Empty
+        'Dim FORMID As String = String.Empty
+        'Dim OFFSET As String = String.Empty
+        'Dim DESC As String = String.Empty
         Dim l As New List(Of Tuple(Of String, String, String, String))
         For Each path In list
             formname = RemoveSpecialCharacters(System.IO.Path.GetFileNameWithoutExtension(path))
@@ -75,8 +76,20 @@ Public Class FileSearch
                     End If
                     line_text = r.ReadLine
                 Loop
-                If Mid(formname, 1, 1) = "3" Then OFFSET = String.Empty
+                'Figure out if we have this Form in the database already
+                'If we have then
+                ' Ignore it
+                'else
+                'Dim f As New FormData
+                'f.FormId = FORMID
+                'f.Description = DESC
+                'f.Update()
+                'end if
                 l.Add(Tuple.Create(formname, FORMID, OFFSET, DESC))
+                formname = String.Empty
+                FORMID = String.Empty
+                OFFSET = String.Empty
+                DESC = String.Empty
             End Using
         Next
         Return l

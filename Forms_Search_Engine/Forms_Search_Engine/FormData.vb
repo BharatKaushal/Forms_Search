@@ -85,10 +85,16 @@ Public Class FormData
 
     Public Sub Update()
 
+        If Me.BrokenRulesCollection.Count > 0 Then
+            'add to log file 
+        End If
     End Sub
     Public Sub DeleteSelf()
 
     End Sub
+#End Region
+#Region "Broken Rules"
+
 #End Region
 
     Public Class Criteria
