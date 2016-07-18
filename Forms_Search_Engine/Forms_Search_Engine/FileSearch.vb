@@ -26,17 +26,12 @@ Public Class FileSearch
         Dim r As New Regex("(?:[^a-z0-9 ]|(?<=['""])s)", RegexOptions.IgnoreCase Or RegexOptions.CultureInvariant Or RegexOptions.Compiled)
         Return r.Replace(input, [String].Empty)
     End Function
-    Public Shared Function GetFileInfo() As List(Of FormData) '(Of Tuple(Of String, String, String, String))
-        Dim As FormData
-        Dim list As List(Of String) = GetFilesRecursive("C:\Users\bharats\Desktop\New folder")
+    Public Shared Sub GetFileInfo()
+        Dim list As List(Of String) = GetFilesRecursive("C:\Users\Bhanu-PC\Desktop\GAMES\New folder")
+        Dim f As New FormData
         ' Loop through and display each path.
-        'Dim formname As String = String.Empty
-        'Dim FORMID As String = String.Empty
-        'Dim OFFSET As String = String.Empty
-        'Dim DESC As String = String.Empty
-        Dim l As New List(Of Tuple(Of String, String, String, String))
         For Each path In list
-            formname = RemoveSpecialCharacters(System.IO.Path.GetFileNameWithoutExtension(path))
+            f.ProgramName = RemoveSpecialCharacters(System.IO.Path.GetFileNameWithoutExtension(path))
             Dim list_text As New List(Of String)
             Using r As StreamReader = New StreamReader(path)
                 Dim line_text As String
@@ -46,52 +41,112 @@ Public Class FileSearch
                     If line_text.Contains("FormID") Or line_text.Contains("Form ID") Or line_text.Contains("FORMID") Then
                         If line_text.Contains("=") Then
                             Dim values() As String = line_text.Split(CChar("=")).ToArray
-                            FORMID = values(1)
+                            f.FormId = values(1)
                         ElseIf line_text.Contains(":") Then
                             Dim values() As String = line_text.Split(CChar(":")).ToArray
-                            FORMID = values(1)
+                            f.FormId = values(1)
                         End If
                     End If
                     If line_text.Contains("offset") Or line_text.Contains("Offset") Or line_text.Contains("Off-set") Then
                         If line_text.Contains("=") Then
                             Dim values1() As String = line_text.Split(CChar("=")).ToArray
                             Dim values3() As String = values1(1).Split(CChar("(")).ToArray
-                            OFFSET = values3(0)
+                            f.Offset = values3(0)
                         ElseIf line_text.Contains(":") Then
                             Dim values1() As String = line_text.Split(CChar(":")).ToArray
                             Dim values3() As String = values1(1).Split(CChar("(")).ToArray
-                            OFFSET = values3(0)
+                            f.Offset = values3(0)
                         End If
                     End If
                     If line_text.Contains("formname") Or line_text.Contains("FormName") Or line_text.Contains("FORMTITLE") Then
                         If line_text.Contains("=") Then
                             Dim values2() As String = line_text.Split(CChar("=")).ToArray
-                            DESC = values2(1)
+                            f.Description = values2(1)
                         ElseIf line_text.Contains(":") Then
                             Dim values2() As String = line_text.Split(CChar(":")).ToArray
-                            DESC = values2(1)
+                            f.Description = values2(1)
                         End If
-                        DESC = RemoveSpecialCharacters(DESC)
+                        f.Description = RemoveSpecialCharacters(f.Description)
                         Exit Do
                     End If
                     line_text = r.ReadLine
                 Loop
-                'Figure out if we have this Form in the database already
-                'If we have then
-                ' Ignore it
-                'else
-                'Dim f As New FormData
-                'f.FormId = FORMID
-                'f.Description = DESC
-                'f.Update()
-                'end if
-                l.Add(Tuple.Create(formname, FORMID, OFFSET, DESC))
-                formname = String.Empty
-                FORMID = String.Empty
-                OFFSET = String.Empty
-                DESC = String.Empty
+                f.Update()
+                f.ProgramName = String.Empty
+                f.FormId = String.Empty
+                f.Offset = String.Empty
+                f.Description = String.Empty
             End Using
         Next
-        Return l
-    End Function
+    End Sub
+    'Public Shared Function GetFileInfo() As List(Of Tuple(Of String, String, String, String))
+    '    Dim list As List(Of String) = GetFilesRecursive("C:\Users\Bhanu-PC\Desktop\GAMES\New folder")
+    '    ' Loop through and display each path.
+    '    Dim formname As String = String.Empty
+    '    Dim FORMID As String = String.Empty
+    '    Dim OFFSET As String = String.Empty
+    '    Dim DESC As String = String.Empty
+    '    Dim l As New List(Of Tuple(Of String, String, String, String))
+    '    For Each path In list
+    '        formname = RemoveSpecialCharacters(System.IO.Path.GetFileNameWithoutExtension(path))
+    '        Dim list_text As New List(Of String)
+    '        Using r As StreamReader = New StreamReader(path)
+    '            Dim line_text As String
+    '            line_text = r.ReadLine
+    '            Do While (Not line_text Is Nothing)
+    '                list_text.Add(line_text)
+    '                If line_text.Contains("FormID") Or line_text.Contains("Form ID") Or line_text.Contains("FORMID") Then
+    '                    If line_text.Contains("=") Then
+    '                        Dim values() As String = line_text.Split(CChar("=")).ToArray
+    '                        FORMID = values(1)
+    '                    ElseIf line_text.Contains(":") Then
+    '                        Dim values() As String = line_text.Split(CChar(":")).ToArray
+    '                        FORMID = values(1)
+    '                    End If
+    '                End If
+    '                If line_text.Contains("offset") Or line_text.Contains("Offset") Or line_text.Contains("Off-set") Then
+    '                    If line_text.Contains("=") Then
+    '                        Dim values1() As String = line_text.Split(CChar("=")).ToArray
+    '                        Dim values3() As String = values1(1).Split(CChar("(")).ToArray
+    '                        OFFSET = values3(0)
+    '                    ElseIf line_text.Contains(":") Then
+    '                        Dim values1() As String = line_text.Split(CChar(":")).ToArray
+    '                        Dim values3() As String = values1(1).Split(CChar("(")).ToArray
+    '                        OFFSET = values3(0)
+    '                    End If
+    '                End If
+    '                If line_text.Contains("formname") Or line_text.Contains("FormName") Or line_text.Contains("FORMTITLE") Then
+    '                    If line_text.Contains("=") Then
+    '                        Dim values2() As String = line_text.Split(CChar("=")).ToArray
+    '                        DESC = values2(1)
+    '                    ElseIf line_text.Contains(":") Then
+    '                        Dim values2() As String = line_text.Split(CChar(":")).ToArray
+    '                        DESC = values2(1)
+    '                    End If
+    '                    DESC = RemoveSpecialCharacters(DESC)
+    '                    Exit Do
+    '                End If
+    '                line_text = r.ReadLine
+    '            Loop
+
+    '            'Figure out if we have this Form in the database already
+    '            'If we have then
+    '            ' Ignore it
+    '            'else
+    '            Dim f As New FormData
+    '            f.ProgramName = formname
+    '            f.FormId = FORMID
+    '            f.Description = DESC
+    '            f.Update()
+    '            'end if
+    '            l.Add(Tuple.Create(formname, FORMID, OFFSET, DESC))
+
+    '            formname = String.Empty
+    '            FORMID = String.Empty
+    '            OFFSET = String.Empty
+    '            DESC = String.Empty
+    '        End Using
+    '    Next
+    '    Return l
+    'End Function
 End Class

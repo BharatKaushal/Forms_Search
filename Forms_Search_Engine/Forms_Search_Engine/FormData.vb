@@ -1,5 +1,6 @@
 ﻿Imports System.Linq
 Imports System.Data
+Imports System.Data.SqlClient
 
 <Serializable()>
 Public Class FormData
@@ -42,6 +43,17 @@ Public Class FormData
             SetProperty(OffsetProperty, value)
         End Set
     End Property
+
+    Public Shared ReadOnly PathProperty As PropertyInfo(Of String) = RegisterProperty(Of String)(Function(c) c.File_Path)
+    Public Property File_Path() As String
+        Get
+            Return GetProperty(PathProperty)
+        End Get
+        Set(ByVal value As String)
+            SetProperty(PathProperty, value)
+        End Set
+    End Property
+
     Public Shared ReadOnly Date_ModifiedProperty As PropertyInfo(Of DateTime) = RegisterProperty(Of DateTime)(Function(c) c.Date_Modified)
     Public Property Date_Modified() As DateTime
         Get
@@ -52,7 +64,6 @@ Public Class FormData
         End Set
     End Property
 #End Region
-
 #Region "  Data Access "
     Public Sub New()
         MarkAsChild()
@@ -84,7 +95,10 @@ Public Class FormData
     End Sub
 
     Public Sub Update()
-
+        Dim query As New Text.StringBuilder
+        query.AppendLine("insert into Forms_Info(FormId, ProgramName,Description,Offset,DateModified)")
+        query.AppendLine("values ('" & FormId & "','" & ProgramName & "','" & Description & "','" & Offset & "','" & Date_Modified & "');")
+        DataManager.UpdateDatabase(query.ToString)
         If Me.BrokenRulesCollection.Count > 0 Then
             'add to log file 
         End If
@@ -93,7 +107,7 @@ Public Class FormData
 
     End Sub
 #End Region
-#Region "Broken Rules"
+#Region "  Broken Rules"
 
 #End Region
 
