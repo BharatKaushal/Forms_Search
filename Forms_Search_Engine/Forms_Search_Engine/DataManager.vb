@@ -4,11 +4,14 @@ Imports System.Data
 Public Class DataManager
     Implements IDataStore
     Public Shared Function UpdateDatabase(query As String) As Boolean
+        Dim f As New FormData
         Dim data As SqlDataReader = Nothing
-        Dim Result As String = "All good"
-        Dim connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes") 'User=pbsuser;Pwd=pbs8805")
+        Dim Result As String = String.Empty
+        Dim connection As New SqlConnection("Server=BHARATS03D\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805") 'Trusted_Connection=Yes")
         Try
             connection.Open()
+            Dim CheckUserName As New SqlCommand("SELECT COUNT(*) FROM Forms_Info WHERE (ProgramName = " + f.ProgramName + ")", connection)
+            'CheckUserName.Parameters.AddWithValue(f.ProgramName,)
             Dim command As New SqlCommand(query, connection)
             data = command.ExecuteReader()
             Return True
@@ -24,7 +27,7 @@ Public Class DataManager
         Dim data As SqlDataReader = Nothing
         Dim Result As String = "All good"
         Try
-            Dim connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes") 'User=pbsuser;Pwd=pbs8805")
+            Dim connection As New SqlConnection("Server=BHARATS03D\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805") 'Trusted_Connection=Yes")
             connection.Open()
             Dim command As New SqlCommand(query, connection)
             data = command.ExecuteReader()
@@ -37,7 +40,7 @@ Public Class DataManager
     Public Shared Function ExecuteInsertUpdate(query As String, ByVal fields As Dictionary(Of String, Object)) As Object
         Dim IdentityValue As Object = Nothing
         Dim data As SqlDataReader = Nothing
-        Using connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes") 'User=pbsuser;Pwd=pbs8805")
+        Using connection As New SqlConnection("Server=BHARATS03D\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805") 'Trusted_Connection=Yes")
             connection.Open()
             Try
                 Dim ds As New DataSet

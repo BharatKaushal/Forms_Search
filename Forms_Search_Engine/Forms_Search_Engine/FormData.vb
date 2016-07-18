@@ -95,6 +95,14 @@ Public Class FormData
     End Sub
 
     Public Sub Update()
+        'Dim updateQuery As New Text.StringBuilder
+        Dim connection As New SqlConnection("Server=BHARATS03D\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805") 'Trusted_Connection=Yes")
+        connection.Open()
+        Dim CheckUserName As New SqlCommand("SELECT COUNT(*) FROM Forms_Info WHERE (ProgramName = " + ProgramName + ")", connection)
+
+        connection.Close()
+        'CheckUserName.Parameters.AddWithValue(f.ProgramName,)
+        'updateQuery.AppendLine("SELECT COUNT(*) FROM Forms_Info WHERE (ProgramName = " + ProgramName + ")")
         Dim query As New Text.StringBuilder
         query.AppendLine("insert into Forms_Info(FormId, ProgramName,Description,Offset,DateModified)")
         query.AppendLine("values ('" & FormId & "','" & ProgramName & "','" & Description & "','" & Offset & "','" & Date_Modified & "');")
