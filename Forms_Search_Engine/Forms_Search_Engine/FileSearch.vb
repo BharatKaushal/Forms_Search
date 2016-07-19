@@ -34,7 +34,7 @@ Public Class FileSearch
         Return r.Replace(input, [String].Empty)
     End Function
     Public Shared Sub GetFileInfo()
-        Dim list As List(Of String) = GetFilesRecursive("C:\Users\bharats\Desktop\New folder")
+        Dim list As List(Of String) = GetFilesRecursive("C:\Users\bharats\Desktop\New folder\New folder")
         Dim f As New FormData
         ' Loop through and display each path.
         For Each path In list
@@ -48,10 +48,12 @@ Public Class FileSearch
                     If line_text.Contains("FormID") Or line_text.Contains("Form ID") Or line_text.Contains("FORMID") Then
                         If line_text.Contains("=") Then
                             Dim values() As String = line_text.Split(CChar("=")).ToArray
-                            f.FormId = values(1)
+                            Dim values1() As String = values(1).Split(UCase(CChar("USING"))).ToArray
+                            f.FormId = values1(0)
                         ElseIf line_text.Contains(":") Then
                             Dim values() As String = line_text.Split(CChar(":")).ToArray
-                            f.FormId = values(1)
+                            Dim values1() As String = values(1).Split(UCase(CChar("USING"))).ToArray
+                            f.FormId = values1(0)
                         End If
                         f.FormId = RemoveDoubleQuotes(f.FormId)
                     End If
