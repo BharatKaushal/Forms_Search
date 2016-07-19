@@ -3,15 +3,29 @@ Imports System.Data.SqlClient
 Imports System.Data
 Public Class DataManager
     Implements IDataStore
-    Public Shared Function UpdateDatabase(query As String) As Boolean
-        Dim f As New FormData
-        Dim data As SqlDataReader = Nothing
+    Public Shared Function CheckDatabase(query As String) As Boolean
         Dim Result As String = String.Empty
-        Dim connection As New SqlConnection("Server=BHARATS03D\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805") 'Trusted_Connection=Yes")
+        Dim AlreadyExist As Boolean
+        Dim connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes") 'User=pbsuser;Pwd=pbs8805")
         Try
             connection.Open()
-            Dim CheckUserName As New SqlCommand("SELECT COUNT(*) FROM Forms_Info WHERE (ProgramName = " + f.ProgramName + ")", connection)
-            'CheckUserName.Parameters.AddWithValue(f.ProgramName,)
+            Dim CheckUserName As New SqlCommand(query, connection)
+            AlreadyExist = Convert.ToBoolean(CheckUserName.ExecuteScalar())
+            Return AlreadyExist
+        Catch ex As Exception
+            Result = ex.Message & vbNewLine
+            Result &= ex.StackTrace.ToString
+            Return AlreadyExist
+        Finally
+            connection.Close()
+        End Try
+    End Function
+    Public Shared Function UpdateDatabase(query As String) As Boolean
+        Dim data As SqlDataReader = Nothing
+        Dim Result As String = String.Empty
+        Dim connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes") 'User=pbsuser;Pwd=pbs8805")
+        Try
+            connection.Open()
             Dim command As New SqlCommand(query, connection)
             data = command.ExecuteReader()
             Return True
@@ -27,7 +41,7 @@ Public Class DataManager
         Dim data As SqlDataReader = Nothing
         Dim Result As String = "All good"
         Try
-            Dim connection As New SqlConnection("Server=BHARATS03D\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805") 'Trusted_Connection=Yes")
+            Dim connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes") 'User=pbsuser;Pwd=pbs8805")
             connection.Open()
             Dim command As New SqlCommand(query, connection)
             data = command.ExecuteReader()
@@ -40,7 +54,7 @@ Public Class DataManager
     Public Shared Function ExecuteInsertUpdate(query As String, ByVal fields As Dictionary(Of String, Object)) As Object
         Dim IdentityValue As Object = Nothing
         Dim data As SqlDataReader = Nothing
-        Using connection As New SqlConnection("Server=BHARATS03D\SQLEXPRESS;Database=FORMS_DATABASE;User=pbsuser;Pwd=pbs8805") 'Trusted_Connection=Yes")
+        Using connection As New SqlConnection("Server=MYPC\SQLEXPRESS;Database=FORMS_DATABASE;Trusted_Connection=Yes") 'User=pbsuser;Pwd=pbs8805")
             connection.Open()
             Try
                 Dim ds As New DataSet
