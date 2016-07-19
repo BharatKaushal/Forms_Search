@@ -22,12 +22,19 @@ Public Class FileSearch
         Loop
         Return result
     End Function
+    Public Shared Function RemoveDoubleQuotes(ByVal input As String) As String
+        Dim pattern As String = "\"""
+        Dim replacement As String = String.Empty
+        Dim rgx As New Regex(pattern)
+        Dim result As String = rgx.Replace(input, replacement)
+        Return result
+    End Function
     Public Shared Function RemoveSpecialCharacters(ByVal input As String) As String
         Dim r As New Regex("(?:[^a-z0-9 ]|(?<=['""])s)", RegexOptions.IgnoreCase Or RegexOptions.CultureInvariant Or RegexOptions.Compiled)
         Return r.Replace(input, [String].Empty)
     End Function
     Public Shared Sub GetFileInfo()
-        Dim list As List(Of String) = GetFilesRecursive("C:\Users\Bhanu-PC\Desktop\GAMES\New folder")
+        Dim list As List(Of String) = GetFilesRecursive("C:\Users\bharats\Desktop\New folder")
         Dim f As New FormData
         ' Loop through and display each path.
         For Each path In list
@@ -46,6 +53,7 @@ Public Class FileSearch
                             Dim values() As String = line_text.Split(CChar(":")).ToArray
                             f.FormId = values(1)
                         End If
+                        f.FormId = RemoveDoubleQuotes(f.FormId)
                     End If
                     If line_text.Contains("offset") Or line_text.Contains("Offset") Or line_text.Contains("Off-set") Then
                         If line_text.Contains("=") Then
@@ -66,7 +74,7 @@ Public Class FileSearch
                             Dim values2() As String = line_text.Split(CChar(":")).ToArray
                             f.Description = values2(1)
                         End If
-                        f.Description = RemoveSpecialCharacters(f.Description)
+                        f.Description = RemoveDoubleQuotes(f.Description)
                         Exit Do
                     End If
                     line_text = r.ReadLine

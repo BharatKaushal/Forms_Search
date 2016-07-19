@@ -15,11 +15,11 @@ Public Class FormDataInfoList
             Query.AppendLine("SELECT * FROM FORMS_INFO ")
             Query.AppendLine("WHERE 1=1")
             If Not String.IsNullOrWhiteSpace(ProgramName) AndAlso Not String.IsNullOrWhiteSpace(FormId) Then
-                Query.AppendFormat("AND ProgramName = '{0} AND FormId = {1}'", ProgramName, FormId)
+                Query.AppendFormat("AND ProgramName LIKE '%{0}%' AND FormId LIKE '%{1}%'", ProgramName, FormId)
             ElseIf Not String.IsNullOrWhiteSpace(ProgramName) Then
-                Query.AppendFormat("AND ProgramName = '{0}'", ProgramName)
+                Query.AppendFormat("AND ProgramName LIKE '%{0}%'", ProgramName)
             ElseIf Not String.IsNullOrWhiteSpace(FormId) Then
-                Query.AppendFormat("AND FormId = '{0}'", FormId)
+                Query.AppendFormat("AND FormId LIKE '%{0}%'", FormId)
             End If
             FormInfoList.IsReadOnly = False
             Dim result = crit.DataSource.ExecuteQuery(Query.ToString)
