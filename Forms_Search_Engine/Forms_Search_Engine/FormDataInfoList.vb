@@ -32,6 +32,7 @@ Public Class FormDataInfoList
                         .Description = dr("Description")
                         .Offset = dr("Offset")
                         .Date_Modified = dr("DateModified")
+                        .File_Path = dr("FilePath")
                     End With
                     FormInfoList.Add(itm)
                 Loop
@@ -47,7 +48,6 @@ Public Class FormDataInfoList
         Public Property Description As String
         Public Property CreatedDate As Nullable(Of DateTime)
         Public Property DataSource As IDataStore
-
         Public Function IsValid() As Boolean
             Return Not String.IsNullOrWhiteSpace(ProgramName) OrElse Not String.IsNullOrWhiteSpace(FormId) OrElse Not String.IsNullOrWhiteSpace(Description)
         End Function
@@ -59,5 +59,6 @@ Public Class FormDataInfoList
         Public Property Description As String
         Public Property Offset As String
         Public Property Date_Modified As DateTime
+        Public Property File_Path As String
     End Class
 End Class
