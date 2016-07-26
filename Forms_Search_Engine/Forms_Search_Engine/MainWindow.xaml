@@ -24,9 +24,7 @@
         <DockPanel Grid.Row="2" Grid.Column="1" Margin="0">
             <Button DockPanel.Dock="Right" x:Name="SearchButton" Content="Search" Margin="5,0,0,0" />
             <Button DockPanel.Dock="Right" x:Name="ClearButton" Content="Clear" Width="40"/>
-            <Canvas>
-                <Button x:Name="FileSearchButton" Content="FileSearch" Canvas.Left="236" Width="78"/>
-            </Canvas>
+            <Canvas/>
         </DockPanel>
         <DataGrid x:Name="myDataGrid" Grid.Row="3" Grid.ColumnSpan="2">
         </DataGrid>

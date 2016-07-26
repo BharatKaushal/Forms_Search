@@ -34,11 +34,12 @@ Public Class FileSearch
         Return r.Replace(input, [String].Empty)
     End Function
     Public Shared Sub GetFileInfo()
-        Dim list As List(Of String) = GetFilesRecursive("C:\Users\bharats\Desktop\New folder\New folder")
+        Dim list As List(Of String) = GetFilesRecursive("C:\Users\bharats\Desktop\New folder")
         Dim f As New FormData
         ' Loop through and display each path.
         For Each path In list
             f.ProgramName = RemoveSpecialCharacters(System.IO.Path.GetFileNameWithoutExtension(path))
+            f.File_Path = path
             Dim list_text As New List(Of String)
             Using r As StreamReader = New StreamReader(path)
                 Dim line_text As String
@@ -86,6 +87,7 @@ Public Class FileSearch
                 f.FormId = String.Empty
                 f.Offset = String.Empty
                 f.Description = String.Empty
+                f.File_Path = String.Empty
             End Using
         Next
     End Sub

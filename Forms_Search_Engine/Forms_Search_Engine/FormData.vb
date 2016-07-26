@@ -69,12 +69,13 @@ Public Class FormData
         MarkAsChild()
     End Sub
 
-    Public Sub Populate(ByVal id As String, name As String, desc As String, offset As String, modi As DateTime)
+    Public Sub Populate(ByVal id As String, name As String, desc As String, offset As String, FIL_PATH As String, modi As DateTime)
         LoadProperty(FormIdProperty, id)
         LoadProperty(ProgramNameProperty, name)
         LoadProperty(DescriptionProperty, desc)
         LoadProperty(OffsetProperty, offset)
         LoadProperty(Date_ModifiedProperty, modi)
+        LoadProperty(PathProperty, FIL_PATH)
     End Sub
 
     Public Shared Function Fetch(ByVal crit As Object) As FormData
@@ -90,7 +91,7 @@ Public Class FormData
         Dim dr = dt.Item1.Tables(0).Rows.First
         If dr IsNot Nothing Then
             Dim itm As New FormData()
-            itm.Populate(dr("FormId"), dr("ProgramName"), dr("Description"), dr("Offset"), dr("DateModified"))
+            itm.Populate(dr("FormId"), dr("ProgramName"), dr("Description"), dr("Offset"), dr("FilePath"), dr("DateModified"))
         End If
     End Sub
 
@@ -100,8 +101,8 @@ Public Class FormData
         Dim AlreadyExist As Boolean = DataManager.CheckDatabase(updateQuery.ToString)
         If AlreadyExist = False Then
             Dim query As New Text.StringBuilder
-            query.AppendLine("insert into Forms_Info(FormId, ProgramName,Description,Offset,DateModified)")
-            query.AppendLine("values ('" & FormId & "','" & ProgramName & "','" & Description & "','" & Offset & "','" & Date_Modified & "');")
+            query.AppendLine("insert into Forms_Info(FormId,ProgramName,Description,Offset,FilePath,DateModified)")
+            query.AppendLine("values ('" & FormId & "','" & ProgramName & "','" & Description & "','" & Offset & "','" & File_Path & "','" & Date_Modified & "');")
             DataManager.UpdateDatabase(query.ToString)
         End If
         If Me.BrokenRulesCollection.Count > 0 Then
