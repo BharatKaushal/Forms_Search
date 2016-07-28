@@ -40,6 +40,7 @@ Public Class FileSearch
         For Each path In list
             f.ProgramName = RemoveSpecialCharacters(System.IO.Path.GetFileNameWithoutExtension(path))
             f.File_Path = path
+            f.Date_Modified = System.IO.File.GetLastWriteTime(path)
             Dim list_text As New List(Of String)
             Using r As StreamReader = New StreamReader(path)
                 Dim line_text As String
@@ -88,6 +89,7 @@ Public Class FileSearch
                 f.Offset = String.Empty
                 f.Description = String.Empty
                 f.File_Path = String.Empty
+                f.Date_Modified = Nothing
             End Using
         Next
     End Sub
