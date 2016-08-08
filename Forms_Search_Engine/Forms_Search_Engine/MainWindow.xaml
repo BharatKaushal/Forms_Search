@@ -11,6 +11,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -21,12 +22,14 @@
         <TextBox Grid.Row="0" Grid.Column="1" x:Name="ProgramName" KeyUp="Refresh" Text=""></TextBox>
         <Label Grid.Row="1" Grid.Column="0">Form ID</Label>
         <TextBox Grid.Row="1" Grid.Column="1" KeyUp="Refresh" x:Name="FormID"></TextBox>
-        <DockPanel Grid.Row="2" Grid.Column="1" Margin="0">
+        <Label Grid.Row="2" Grid.Column="0">Description</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" KeyUp="Refresh" x:Name="Description"></TextBox>
+        <DockPanel Grid.Row="3" Grid.Column="1" Margin="0">
             <Button DockPanel.Dock="Right" x:Name="SearchButton" Content="Search" Margin="5,0,0,0" />
             <Button DockPanel.Dock="Right" x:Name="ClearButton" Content="Clear" Width="40" />
             <Canvas Width="329"/>
         </DockPanel>
-        <DataGrid x:Name="myDataGrid" Grid.Row="3" Grid.ColumnSpan="2">
+        <DataGrid x:Name="myDataGrid" Grid.Row="4" Grid.ColumnSpan="2">
         </DataGrid>
     </Grid>
 </Window>
