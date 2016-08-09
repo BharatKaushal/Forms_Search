@@ -3,7 +3,7 @@ Class MainWindow
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
-        FileSearch.GetFileInfo()
+        'FileSearch.GetFileInfo()
         Refresh()
     End Sub
     Private Sub SearchButtonClick(sender As Object, e As RoutedEventArgs) Handles SearchButton.Click
