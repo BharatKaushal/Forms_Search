@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1FF9EEE4-E7F4-4171-9D2A-E94F8DA46075}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>FormSearchService.Module1</StartupObject>
-    <RootNamespace>FormSearchService</RootNamespace>
-    <AssemblyName>FormSearchService</AssemblyName>
+    <StartupObject>FormUpdateService.Module1</StartupObject>
+    <RootNamespace>FormUpdateService</RootNamespace>
+    <AssemblyName>FormUpdateService</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -21,7 +21,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>FormSearchService.xml</DocumentationFile>
+    <DocumentationFile>FormUpdateService.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -31,7 +31,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>FormSearchService.xml</DocumentationFile>
+    <DocumentationFile>FormUpdateService.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>

@@ -78,6 +78,7 @@
     <Compile Include="Class1.vb" />
     <Compile Include="DataManager.vb" />
     <Compile Include="FormData.vb" />
+    <Compile Include="FormDataInfoList.vb" />
     <Compile Include="IDataStore.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

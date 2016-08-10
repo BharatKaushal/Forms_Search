@@ -3,7 +3,6 @@ Class MainWindow
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
-        'FileSearch.GetFileInfo()
         Refresh()
     End Sub
     Private Sub SearchButtonClick(sender As Object, e As RoutedEventArgs) Handles SearchButton.Click
@@ -18,11 +17,11 @@ Class MainWindow
         Refresh()
     End Sub
     Public Sub Refresh()
-        Dim crit As New FormDataInfoList.Criteria()
+        Dim crit As New FormsSearchLibrary.FormDataInfoList.Criteria()
         crit.ProgramName = ProgramName.Text
         crit.FormId = FormID.Text
         crit.Description = Description.Text
-        crit.DataSource = New DataManager
-        myDataGrid.ItemsSource = FormDataInfoList.Fetch(crit)
+        crit.DataSource = New FormsSearchLibrary.DataManager
+        myDataGrid.ItemsSource = FormsSearchLibrary.FormDataInfoList.Fetch(crit)
     End Sub
 End Class
