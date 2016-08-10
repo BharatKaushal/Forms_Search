@@ -35,7 +35,7 @@ Public Class FileSearch
     End Function
     Public Shared Sub GetFileInfo()
         Dim list As List(Of String) = GetFilesRecursive("C:\Users\bharats\Desktop\New folder")
-        Dim f As New Forms_Search_Engine.FormData
+        Dim f As New FormsSearchLibrary.FormData
         ' Loop through and display each path.
         For Each path In list
             f.ProgramName = RemoveSpecialCharacters(System.IO.Path.GetFileNameWithoutExtension(path))
