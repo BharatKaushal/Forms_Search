@@ -15,21 +15,9 @@ Public Class FormDataInfoList
             Dim connection As SqlConnection = Nothing
             Query.AppendLine("SELECT * FROM FORMS_INFO ")
             Query.AppendLine("WHERE 1=1")
-            If Not String.IsNullOrWhiteSpace(ProgramName) AndAlso Not String.IsNullOrWhiteSpace(FormId) AndAlso Not String.IsNullOrWhiteSpace(Description) Then
-                Query.AppendFormat("AND ProgramName LIKE '%{0}%' AND FormId LIKE '%{1}%' AND Description LIKE '%{2}%'", ProgramName, FormId, Description)
-            ElseIf Not String.IsNullOrWhiteSpace(ProgramName) AndAlso Not String.IsNullOrWhiteSpace(FormId) Then
-                Query.AppendFormat("AND ProgramName LIKE '%{0}%' AND FormId LIKE '%{1}%'", ProgramName, FormId)
-            ElseIf Not String.IsNullOrWhiteSpace(ProgramName) AndAlso Not String.IsNullOrWhiteSpace(Description) Then
-                Query.AppendFormat("AND ProgramName LIKE '%{0}%' AND Description LIKE '%{1}%'", ProgramName, Description)
-            ElseIf Not String.IsNullOrWhiteSpace(FormId) AndAlso Not String.IsNullOrWhiteSpace(Description) Then
-                Query.AppendFormat("AND FormId LIKE '%{0}%' AND Description LIKE '%{1}%'", FormId, Description)
-            ElseIf Not String.IsNullOrWhiteSpace(ProgramName) Then
-                Query.AppendFormat("AND ProgramName LIKE '%{0}%'", ProgramName)
-            ElseIf Not String.IsNullOrWhiteSpace(FormId) Then
-                Query.AppendFormat("AND FormId LIKE '%{0}%'", FormId)
-            ElseIf Not String.IsNullOrWhiteSpace(Description) Then
-                Query.AppendFormat("AND Description LIKE '%{0}%'", Description)
-            End If
+            If Not String.IsNullOrWhiteSpace(ProgramName) Then Query.AppendFormat("AND ProgramName LIKE '%{0}%'", ProgramName)
+            If Not String.IsNullOrWhiteSpace(FormId) Then Query.AppendFormat("AND FormID LIKE '%{0}%'", FormId)
+            If Not String.IsNullOrWhiteSpace(Description) Then Query.AppendFormat("AND Description LIKE '%{0}%'", Description)
             FormInfoList.IsReadOnly = False
             Dim result = crit.DataSource.ExecuteQuery(Query.ToString)
             Using dr As SqlDataReader = result.Item1

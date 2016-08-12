@@ -34,7 +34,7 @@ Public Class FileSearch
         Return r.Replace(input, [String].Empty)
     End Function
     Public Shared Sub GetFileInfo()
-        Dim list As List(Of String) = GetFilesRecursive("C:\Users\bharats\Desktop\New folder")
+        Dim list As List(Of String) = GetFilesRecursive("C:\Users\Bhanu-PC\Desktop\GAMES")
         Dim f As New FormsSearchLibrary.FormData
         ' Loop through and display each path.
         For Each path In list

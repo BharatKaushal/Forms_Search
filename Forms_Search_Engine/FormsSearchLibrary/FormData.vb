@@ -96,14 +96,30 @@ Public Class FormData
         End If
     End Sub
     Public Sub Update()
+        Dim FileDate1 As Date
+        Dim CompareFileDate As Integer
+        Dim FileDate2 As Date
+        Dim CheckDateModified As String = String.Empty
         Dim updateQuery As String = String.Empty
         updateQuery = "SELECT COUNT(*) FROM Forms_Info WHERE (ProgramName = '" + ProgramName + "')"
-        Dim AlreadyExist As Boolean = FormsSearchLibrary.DataManager.CheckDatabase(updateQuery.ToString)
-        If AlreadyExist = False Then
+        Dim AlreadyExist As Boolean = DataManager.CheckDatabase(updateQuery)
+        If AlreadyExist = True Then
+            FileDate1 = Date_Modified
+            CheckDateModified = "SELECT DateModified FROM FORMS_INFO WHERE ProgramName = '" + ProgramName + "';"
+            FileDate2 = DataManager.FormInfoChanged(CheckDateModified)
+            CompareFileDate = DateTime.Compare(FileDate1, FileDate2)
+            If CompareFileDate > 0 Then
+                Dim UpdateFileQuery As New Text.StringBuilder
+                UpdateFileQuery.AppendLine("UPDATE Forms_Info ")
+                UpdateFileQuery.AppendLine("SET FormID = '" & FormId & "', ProgramName = '" & ProgramName & "', Description = '" & Description & "',Offset = '" & Offset & "', FilePath = '" & File_Path & "', DateModified = '" & Date_Modified & "' ")
+                UpdateFileQuery.AppendLine("WHERE ProgramName = '" & ProgramName & "';")
+                DataManager.UpdateDatabase(UpdateFileQuery.ToString)
+            End If
+        Else
             Dim query As New Text.StringBuilder
             query.AppendLine("INSERT INTO Forms_Info(FormId,ProgramName,Description,Offset,FilePath,DateModified)")
             query.AppendLine("VALUES ('" & FormId & "','" & ProgramName & "','" & Description & "','" & Offset & "','" & File_Path & "','" & Date_Modified & "');")
-            FormsSearchLibrary.DataManager.UpdateDatabase(query.ToString)
+            DataManager.UpdateDatabase(query.ToString)
         End If
         'If Me.BrokenRulesCollection.Count > 0 Then
         '    'add to log file 
