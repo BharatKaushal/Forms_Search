@@ -85,7 +85,9 @@ Public Class FormData
     Public Shared Async Function FetchAsync(ByVal crit As Object) As Task(Of FormData)
         Return Await DataPortal.FetchAsync(Of FormData)(crit)
     End Function
-
+    Public Shared Function SqlParse(ByVal s As String) As String
+        Return s.Replace("'", "''")
+    End Function
     Protected Sub DataPortal_Fetch(ByVal crit As Object)
         Dim sql As String = String.Format("SELECT * FROM FORMS_INFO WHERE FormId = {0}", crit)
         Dim dt = crit.DataProvider.ExecuteQuery(sql)
